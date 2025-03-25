@@ -1,20 +1,30 @@
+'use client';
+import { useEffect, useState } from "react";
+
 export default function Page() {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const storedAccessToken = localStorage.getItem("access_token");
+    const storedRefreshToken = localStorage.getItem("refresh_token");
+
+    setAccessToken(storedAccessToken);
+    setRefreshToken(storedRefreshToken);
+
+    if (!storedAccessToken) {
+      // Redirect to login if no access token is found
+      window.location.href = "/login";
+    }
+  }, []);
+
+  console.log("Access Token:", accessToken);
+  console.log("Refresh Token:", refreshToken);
+
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-4xl font-bold mb-4">Organigrama</h1>
-      <div className="w-full max-w-sm">
-        <div className="mb-4 max-sm:px-5">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-            Nombre de Usuario
-          </label>
-          <input
-            type="text"
-            id="username"
-            placeholder="nombre de usuario"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-      </div>
+    <main className="flex flex-col items-center justify-center h-full">
+      <h1 className="text-4xl font-bold">Organigrama</h1>
     </main>
   );
 }
