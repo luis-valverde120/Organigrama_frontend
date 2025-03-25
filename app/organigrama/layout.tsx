@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-row items-center justify-center min-h-screen py-2">
       <div className="w-full flex-none md:w-64">
-        <Sidebar refresh={refresh}/>
+        <Sidebar refreshSidebar={refresh}/>
       </div>
       <div className="w-full">{children}</div>
     </div>

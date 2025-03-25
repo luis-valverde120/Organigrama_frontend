@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/app/services/api";
 
 export default function Page() {
   const [username, setUsername] = useState("");
@@ -31,7 +32,7 @@ export default function Page() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
+      const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

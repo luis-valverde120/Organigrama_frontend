@@ -124,9 +124,6 @@ export default function ModalActualizar({ idOrganigrama }: { idOrganigrama: numb
         throw new Error("Error al actualizar el nodo");
       }
 
-      const data = await response.json();
-      console.log("Nodo actualizado:", data);
-
       setSuccess(true);
 
       router.push(`/organigrama/${idOrganigrama}`);

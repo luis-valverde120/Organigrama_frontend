@@ -1,9 +1,11 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/app/services/api";
 
 export default function Page() {
   const [nombreOrganigrama, setNombreOrganigrama] = useState("");
+  const [descripcionOrganigrama, setDescripcionOrganigrama] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
@@ -21,13 +23,13 @@ export default function Page() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/organigrama", {
+      const response = await fetch(`${API_URL}/organigrama`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ nombre: nombreOrganigrama }),
+        body: JSON.stringify({ nombre: nombreOrganigrama, descripcion: descripcionOrganigrama }),
       });
 
       if (!response.ok) {
@@ -36,10 +38,9 @@ export default function Page() {
 
       setSuccess(true);
       setNombreOrganigrama("");
+      setDescripcionOrganigrama("");
 
       // Refresh the entire page
-      router.refresh();
-      router.prefetch("/organigrama");
       router.push("/organigrama");
     } catch (err: any) {
       console.error("Error al agregar el organigrama:", err);
@@ -64,6 +65,17 @@ export default function Page() {
             onChange={(e) => setNombreOrganigrama(e.target.value)}
           />
         </div>
+        <div className="mb-4 max-sm:px-5">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="descripcionOrganigrama">Descripcion</label>
+          <textarea 
+            className="textarea w-full" 
+            id="descripcionOrganigrama"
+            placeholder="Descripcion del organigrama"
+            value={descripcionOrganigrama}
+            onChange={(e) => setDescripcionOrganigrama(e.target.value)}
+            ></textarea>
+        </div>
+
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {success && <p className="text-green-500 text-sm mb-4">Organigrama agregado exitosamente</p>}
         <div className="flex items-center justify-between max-sm:px-5">

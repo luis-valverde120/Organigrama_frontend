@@ -9,3 +9,9 @@ export interface Nodo {
   color_border: string;
   color_text: string;
 }
+
+export interface Organigrama {
+  id: number;
+  nombre: string;
+  descripcion: string;
+}

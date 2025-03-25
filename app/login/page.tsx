@@ -1,10 +1,9 @@
 'use client';
-import LoginForm from "@/app/components/LoginForm"
 import Link from "next/link";
-import { Form } from "react-hook-form"
 import axios from "axios";
-import { GetServerSideProps } from "next";
 import { useState } from "react";
+import Cookies from "js-cookie"; 
+import { API_URL } from "../services/api";
 
 export default function Page() {
   const [username, setUsername] = useState("");
@@ -16,7 +15,7 @@ export default function Page() {
     setError(""); // Clear previous errors
 
     try {
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await axios.post(`${API_URL}/login`, {
         username,
         password,
       });
@@ -24,12 +23,12 @@ export default function Page() {
       if (response.status === 200) {
         const { access_token, refresh_token } = response.data;
 
+        Cookies.set("access_token", access_token, { expires: 1, path: '/' }); // La cookie expira en 1 día
+        Cookies.set("refresh_token", refresh_token, { expires: 1, path: '/' });
+
         // Save tokens in localStorage
         localStorage.setItem("access_token", access_token);
         localStorage.setItem("refresh_token", refresh_token);
-
-        console.log("Access Token:", access_token);
-        console.log("Refresh Token:", refresh_token);
 
         // Redirect to organigrama
         window.location.href = "/organigrama";

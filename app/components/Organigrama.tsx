@@ -102,7 +102,6 @@ const Organigrama = ({ data }: { data: Nodo[] }) => {
     return () => {
       diagramRef.current?.div && (diagramRef.current.div = null);
       diagramRef.current = null;
-      console.log(data);
     };
   }, [data]);
 

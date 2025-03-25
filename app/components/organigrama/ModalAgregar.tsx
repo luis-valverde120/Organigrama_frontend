@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Nodo } from "@/app/utils/Utils";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/app/services/api";
 
 export default function ModalAgregar({ idOrganigrama }: { idOrganigrama: number }) {
   const [nombreNodo, setNombreNodo] = useState("");
@@ -23,7 +24,7 @@ export default function ModalAgregar({ idOrganigrama }: { idOrganigrama: number 
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/api/nodos/${idOrganigrama}`, {
+        const response = await fetch(`${API_URL}/nodos/${idOrganigrama}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -57,7 +58,7 @@ export default function ModalAgregar({ idOrganigrama }: { idOrganigrama: number 
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/nodo`, {
+      const response = await fetch(`${API_URL}/nodo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,9 +77,6 @@ export default function ModalAgregar({ idOrganigrama }: { idOrganigrama: number 
       if (!response.ok) {
         throw new Error("Error al agregar el nodo");
       }
-
-      const data = await response.json();
-      console.log("Nodo agregado:", data);
 
       setSuccess(true);
       setNombreNodo("");

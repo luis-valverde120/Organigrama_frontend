@@ -1,14 +1,10 @@
 'use client';
 import Link from "next/link";
-import Stat from "@/app/components/Stat";
 import { useEffect, useState } from "react";
+import { Organigrama } from "@/app/utils/Utils";
+import { API_URL } from "@/app/services/api";
 
-interface Organigrama {
-  id: number;
-  nombre: string;
-}
-
-export default function Sidebar({ refresh = false }: { refresh?: boolean }) {
+export default function Sidebar({ refreshSidebar = false }: { refreshSidebar?: boolean }) {
   const [organigramas, setOrganigramas] = useState<Organigrama[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +17,7 @@ export default function Sidebar({ refresh = false }: { refresh?: boolean }) {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/organigramas", {
+      const response = await fetch(`${API_URL}/organigramas`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -42,15 +38,12 @@ export default function Sidebar({ refresh = false }: { refresh?: boolean }) {
 
   useEffect(() => {
     fetchOrganigramas();
-  }, [refresh]); // Re-fetch organigramas when `refresh` changes
+  }, [refreshSidebar]); // Always provide a dependency array
 
   return (
     <div className="w-64 fixed left-0 top-0 bottom-0 bg-base-200 text-white p-4 flex flex-col">
       <div className="flex flex-col justify-center items-center mb-2">
         <h2 className="text-2xl font-bold">Organigrama</h2>
-        <div className="w-full flex flex-col justify-center items-left">
-          <Stat title="username" value="nombre" />
-        </div>
       </div>
       <nav className="flex-1">
         <ul className="menu bg-base-200 rounded-box w-56">
@@ -58,6 +51,11 @@ export default function Sidebar({ refresh = false }: { refresh?: boolean }) {
             <details open>
               <summary>Organigramas</summary>
               <ul>
+                <li>
+                  <Link href={"/organigrama"} className="text-blue-500">
+                    Organigramas
+                  </Link>
+                </li>
                 {error ? (
                   <li className="text-red-500">{error}</li>
                 ) : (

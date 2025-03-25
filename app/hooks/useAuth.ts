@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+// const url
+import { API_URL } from "@/app/services/api";
+
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -8,7 +11,7 @@ export const useAuth = () => {
   const login = async (username: string, password: string) => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/auth/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

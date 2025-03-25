@@ -6,6 +6,7 @@ import Organigrama from "@/app/components/Organigrama";
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Nodo } from '@/app/utils/Utils';
+import { API_URL } from "@/app/services/api";
 
 export default function Page() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function Page() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/organigrama/${id}`, {
+      const response = await fetch(`${API_URL}/organigrama/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -54,7 +55,7 @@ export default function Page() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/nodos/${id}`, {
+      const response = await fetch(`${API_URL}/nodos/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -67,7 +68,6 @@ export default function Page() {
 
       const data = await response.json();
       setNodos(data); // Assuming the API returns an array of nodes
-      console.log(data)
     } catch (err: any) {
       console.error("Error fetching nodos:", err);
       setError(err.message || "Error fetching nodos");

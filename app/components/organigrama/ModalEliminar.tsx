@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Nodo } from "@/app/utils/Utils";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/app/services/api";
 
 export default function ModalEliminar({ idOrganigrama }: { idOrganigrama: number }) {
   const [selectedNodo, setSelectedNodo] = useState<number | null>(null);
@@ -20,7 +21,7 @@ export default function ModalEliminar({ idOrganigrama }: { idOrganigrama: number
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/api/nodos/${idOrganigrama}`, {
+        const response = await fetch(`${API_URL}/nodos/${idOrganigrama}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -59,7 +60,7 @@ export default function ModalEliminar({ idOrganigrama }: { idOrganigrama: number
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/nodo/${selectedNodo}`, {
+      const response = await fetch(`${API_URL}/nodo/${selectedNodo}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${accessToken}`,
