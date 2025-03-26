@@ -89,7 +89,7 @@ export default function Home() {
       {/* Texto "Organigrama" aparece junto con el polígono */}
       {showContent && (
         <h1 className="text-9xl font-bold uppercase opacity-0 z-10">
-          Organigrama
+          Organix
         </h1>
       )}
 
